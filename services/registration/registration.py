@@ -15,7 +15,7 @@ logging.basicConfig(
 
 WAGGLE_NODE_ID = os.environ['WAGGLE_NODE_ID']
 WAGGLE_BEEHIVE_HOST = os.environ['WAGGLE_BEEHIVE_HOST']
-
+WAGGLE_BEEHIVE_PORT = os.environ['WAGGLE_BEEHIVE_PORT']
 
 def scan_block(s, head, tail):
     match = re.search(head, s)
@@ -59,14 +59,14 @@ should_exist = [
 
 
 def get_cacert_from_local_cert_server():
-    r = requests.get(f'http://{WAGGLE_BEEHIVE_HOST}:24181/certca')
+    r = requests.get(f'http://{WAGGLE_BEEHIVE_HOST}:{WAGGLE_BEEHIVE_PORT}/certca')
     r.raise_for_status()
     return scan_certificate(r.text)
 
 
 def get_credentials_from_local_cert_server():
     r = requests.get(
-        f'http://{WAGGLE_BEEHIVE_HOST}:24181/node?{WAGGLE_NODE_ID}')
+        f'http://{WAGGLE_BEEHIVE_HOST}:{WAGGLE_BEEHIVE_PORT}/node?{WAGGLE_NODE_ID}')
     r.raise_for_status()
     return r.text
 
